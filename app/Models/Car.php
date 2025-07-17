@@ -17,6 +17,7 @@ class Car extends Model
         'name',
         'slug',
         'brand_id',
+        'category_id',
         'description',
         'price'
     ];

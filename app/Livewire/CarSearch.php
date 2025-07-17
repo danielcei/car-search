@@ -34,10 +34,30 @@ class CarSearch extends Component
             perPage: 10
         );
 
+        if (!$this->isIntegerArray($filter->brandIds)) {
+            $this->addError('selectedBrands', 'Brands invalids.');
+        }
+
+        if (!$this->isIntegerArray($filter->categoryIds)) {
+            $this->addError('selectedCategories', 'Categories invalids.');
+        }
+
+        if ($this->getErrorBag()->isNotEmpty()) {
+            return view('livewire.car-search', [
+                'cars' => $cars ?? null,
+                'brands' => $brandRepo->getAllCached(),
+                'categories' => $categoryRepo->getAllCached(),
+                'hasResults' => false,
+            ]);
+        }
+
+        $cars = $searchUseCase->execute($filter);
+
         return view('livewire.car-search', [
-            'cars' => $searchUseCase->execute($filter),
+            'cars' => $cars ?? null,
             'brands' => $brandRepo->getAllCached(),
             'categories' => $categoryRepo->getAllCached(),
+            'hasResults' => $cars->isNotEmpty(),
         ]);
     }
 
@@ -55,5 +75,20 @@ class CarSearch extends Component
                 $this->selectedCategories,
                 $this->paginators['page'] ?? 1,
             ]));
+    }
+
+    private function isIntegerArray(?array $array): bool
+    {
+        if (!is_array($array)) {
+            return false;
+        }
+
+        foreach ($array as $item) {
+            if (!filter_var($item, FILTER_VALIDATE_INT)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
