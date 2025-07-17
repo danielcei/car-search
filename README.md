@@ -44,17 +44,50 @@ Sistema de busca de carros com filtros combinados desenvolvido em Laravel Livewi
    ```bash
    composer install
    php artisan migrate
+   php artisan db:seed --class=CarSeeder
    npm install
    npm run build
 
+4. Teste
+   ```bash
+   #entre dentro do container
+   php artisan optimize
+   ./vendor/bin/pest
+
+
+## Adicione produtos / carro
+   php artinsa app:add-cars-command (quantidade de itens)
+  
 ## Importante
 
 Se dê algum erro ao criar o container
 docker system prune -a --force (Atenção isso vai apagar tudo do docker)
 
-Repita o Passo 3
+- Repita o Passo 3
 
 
-   
+## Configure seu Host se necessário
+#Windows
+
+Abra o Bloco de Notas como administrador.
+
+Edite o arquivo: C:\Windows\System32\drivers\etc\hosts
+
+Adicione: 127.0.0.1 meuapp.local
+
+Salve e abra http://meuapp.local no navegador.
+
+#Mac
+
+No Terminal, digite: sudo nano /etc/hosts
+
+Adicione: 127.0.0.1 meuapp.local
+
+Salve (Ctrl + O) e saia (Ctrl + X).
+
+(Opcional) Limpe o cache DNS:
+sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+
+Pronto! Você pode acessar seu app usando http://meuapp.local.   
 
 

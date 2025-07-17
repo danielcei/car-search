@@ -8,7 +8,7 @@ class CarSearchFilter
         public ?string $search = null,
         public ?array  $brandIds = null,
         public ?array  $categoryIds = null,
-        public int     $perPage = 10
+        public int     $perPage = 12
     )
     {
     }

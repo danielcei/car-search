@@ -14,10 +14,6 @@ class BrandRepository implements BrandRepositoryInterface
 
     public function getAllCached(): Collection
     {
-        return $this->cache->remember(
-            'all-brands',
-            now()->addDay(),
-            fn() => Brand::orderBy('name')->get()
-        );
+        return Brand::orderBy('name')->get();
     }
 }

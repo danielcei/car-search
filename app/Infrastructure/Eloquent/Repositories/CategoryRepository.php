@@ -14,10 +14,6 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function getAllCached(): Collection
     {
-        return $this->cache->remember(
-            'all-category',
-            now()->addDay(),
-            fn() => Category::orderBy('name')->get()
-        );
+        return Category::orderBy('name')->get();
     }
 }

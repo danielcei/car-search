@@ -31,7 +31,7 @@ class CarSearch extends Component
             search: $this->search,
             brandIds: $this->selectedBrands,
             categoryIds: $this->selectedCategories,
-            perPage: 10
+            perPage: 12
         );
 
         if (!$this->isIntegerArray($filter->brandIds)) {
