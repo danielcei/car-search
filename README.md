@@ -40,54 +40,71 @@ Sistema de busca de carros com filtros combinados desenvolvido em Laravel Livewi
     # O ID geralmente aparece na primeira coluna do comando docker ps
     docker exec -it CONTAINER_ID bash
 
-4. Dentro do Container
+5. Dentro do Container
    ```bash
    composer install
    php artisan migrate
    php artisan db:seed --class=CarSeeder
    npm install
    npm run build
+   
+6. Pronto! Você pode acessar seu app usando
+   ```bash
+    http://localhost:8181.
 
-4. Teste
+7. Teste
    ```bash
    #entre dentro do container
    php artisan optimize
    ./vendor/bin/pest
 
 
-## Adicione produtos / carro
-   php artinsa app:add-cars-command (quantidade de itens)
-  
-## Importante
 
-Se dê algum erro ao criar o container
-docker system prune -a --force (Atenção isso vai apagar tudo do docker)
 
-- Repita o Passo 3
+## Adicione produtos - carro
+
+1. Digite o comando a baixo para adicionar novos produtos (faker)
+    ```bash
+    php artinsa app:add-cars-command (quantidade de itens)
+   
+## Teste com Pest
+
+1. Entre dentro do container
+    ```bash
+   php artisan optimize
+   ./vendor/bin/pest
 
 
 ## Configure seu Host se necessário
-#Windows
+Em alguns casos será necessário configurar o seu host para acessar o sistema via browser.
+1. Windows
+   ```bash
+        #Abra o Bloco de Notas como administrador.
+        #Edite o arquivo: 
+            C:\Windows\System32\drivers\etc\hosts
+        #Adicione: 
+            127.0.0.1 localhost
+        Renicie computador ou recrie o container  
 
-Abra o Bloco de Notas como administrador.
-
-Edite o arquivo: C:\Windows\System32\drivers\etc\hosts
-
-Adicione: 127.0.0.1 meuapp.local
-
-Salve e abra http://meuapp.local no navegador.
-
-#Mac
-
-No Terminal, digite: sudo nano /etc/hosts
-
-Adicione: 127.0.0.1 meuapp.local
-
-Salve (Ctrl + O) e saia (Ctrl + X).
-
-(Opcional) Limpe o cache DNS:
-sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
-
-Pronto! Você pode acessar seu app usando http://meuapp.local.   
+2. Mac
+   ```bash
+   #No Terminal, digite: 
+         sudo nano /etc/hosts
+         sudo dscacheutil -flushcache
+         sudo killall -HUP mDNSResponder
+   #Adicione: 
+         127.0.0.1 localhost
+   
+Abra o Browser
+http://localhost:8181
 
 
+## Importante
+
+1. Durante a criação do container, existem alguns bibliotecas que estão demorando a ser baixado, levando muito tempo para ser contrruido.
+Muitas das vezesn dando erros, Se dê algum erro ao criar o container
+   ```bash
+        docker system prune -a --force 
+
+(Atenção isso vai apagar tudo do docker, se vc tiver em algum projeto)
+- Repita o Passo 3
