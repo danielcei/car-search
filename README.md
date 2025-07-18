@@ -53,7 +53,7 @@ Sistema de busca de carros com filtros combinados desenvolvido em Laravel Livewi
    
 6. Pronto! Você pode acessar seu app usando
    ```bash
-    http://localhost:8181.
+    http://localhost:8181
 
 7. Teste
    ```bash
