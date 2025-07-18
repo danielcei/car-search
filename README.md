@@ -15,6 +15,9 @@ Sistema de busca de carros com filtros combinados desenvolvido em Laravel Livewi
    ```bash
    git clone https://github.com/danielcei/car-search.git 
    cd car-search
+   
+2. Copiar .env (⚠️ IMPORTANTE caso esqueça de copiar o .env faça tudo novamente):
+    ```bash
    cp .env.example .env
 
 2. Configure o Ambiente:
@@ -98,10 +101,10 @@ http://localhost:8181
 
 ## Importante
 
-1. Durante a criação do container, existem alguns bibliotecas que estão demorando a ser baixado, levando muito tempo para ser contrruido.
-Muitas das vezesn dando erros, Se dê algum erro ao criar o container
+1. Durante a criação do container, algumas bibliotecas podem demorar para ser baixadas, o que torna o processo de build muito lento.
+   Em muitos casos, ocorrem erros. Se acontecer algum erro durante a criação do container, execute o comando abaixo:
    ```bash
         docker system prune -a --force 
 
-(Atenção isso vai apagar tudo do docker, se vc tiver em algum projeto)
+⚠️ Atenção: Esse comando irá apagar tudo do Docker (containers, imagens, volumes e redes). Use com cuidado, principalmente se estiver trabalhando em outros projetos.
 - Repita o Passo 3

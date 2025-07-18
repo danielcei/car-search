@@ -2,10 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Domain\Brands\Repositories\BrandRepositoryInterface;
 use App\Domain\Cars\DTOs\CarSearchFilter;
-use App\Domain\Cars\Repositories\BrandRepositoryInterface;
-use App\Domain\Cars\Repositories\CategoryRepositoryInterface;
 use App\Domain\Cars\UseCases\SearchCars;
+use App\Domain\Categories\Repositories\CategoryRepositoryInterface;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,72 +23,41 @@ class CarSearch extends Component
         'selectedCategories' => ['except' => []],
     ];
 
-    public function render(SearchCars                  $searchUseCase,
-                           BrandRepositoryInterface    $brandRepo,
-                           CategoryRepositoryInterface $categoryRepo)
-    {
-        $filter = new CarSearchFilter(
-            search: $this->search,
-            brandIds: $this->selectedBrands,
-            categoryIds: $this->selectedCategories,
-            perPage: 12
-        );
+    public function render(
+        SearchCars $searchUseCase,
+        BrandRepositoryInterface $brandRepo,
+        CategoryRepositoryInterface $categoryRepo
+    ) {
+        try {
+            $filter = new CarSearchFilter(
+                search: $this->search,
+                brandIds: $this->selectedBrands,
+                categoryIds: $this->selectedCategories,
+                perPage: 12
+            );
 
-        if (!$this->isIntegerArray($filter->brandIds)) {
-            $this->addError('selectedBrands', 'Brands invalids.');
-        }
+            $cars = $searchUseCase->execute($filter);
 
-        if (!$this->isIntegerArray($filter->categoryIds)) {
-            $this->addError('selectedCategories', 'Categories invalids.');
-        }
-
-        if ($this->getErrorBag()->isNotEmpty()) {
             return view('livewire.car-search', [
-                'cars' => $cars ?? null,
+                'cars' => $cars,
+                'brands' => $brandRepo->getAllCached(),
+                'categories' => $categoryRepo->getAllCached(),
+                'hasResults' => $cars->isNotEmpty(),
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            $this->addError('filters-erros', $e->getMessage());
+            return view('livewire.car-search', [
+                'cars' => null,
                 'brands' => $brandRepo->getAllCached(),
                 'categories' => $categoryRepo->getAllCached(),
                 'hasResults' => false,
             ]);
         }
-
-        $cars = $searchUseCase->execute($filter);
-
-        return view('livewire.car-search', [
-            'cars' => $cars ?? null,
-            'brands' => $brandRepo->getAllCached(),
-            'categories' => $categoryRepo->getAllCached(),
-            'hasResults' => $cars->isNotEmpty(),
-        ]);
     }
 
     public function resetFilters(): void
     {
         $this->reset(['search', 'selectedBrands', 'selectedCategories']);
         $this->resetPage();
-    }
-
-    protected function getCacheKey(): string
-    {
-        return 'car-search:' . md5(serialize([
-                $this->search,
-                $this->selectedBrands,
-                $this->selectedCategories,
-                $this->paginators['page'] ?? 1,
-            ]));
-    }
-
-    private function isIntegerArray(?array $array): bool
-    {
-        if (!is_array($array)) {
-            return false;
-        }
-
-        foreach ($array as $item) {
-            if (!filter_var($item, FILTER_VALIDATE_INT)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

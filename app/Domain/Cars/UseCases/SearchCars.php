@@ -2,30 +2,26 @@
 
 namespace App\Domain\Cars\UseCases;
 
+use App\Application\Services\CarSearchCacheKeyGenerator;
 use App\Domain\Cars\DTOs\CarSearchFilter;
 use App\Domain\Cars\Repositories\CarRepositoryInterface;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
+
 
 class SearchCars
 {
     public function __construct(
-        private CarRepositoryInterface $repository
+        private readonly CarRepositoryInterface $repository,
+        protected CarSearchCacheKeyGenerator    $cacheKeyGenerator,
     ) {}
 
     public function execute(CarSearchFilter $filter): Paginator
     {
-        $cacheKey = $this->getCacheKey($filter);
+        $key = $this->cacheKeyGenerator->generate($filter, $filter->perPage ?? 1);
 
-        return $this->repository->search($filter);
-    }
-
-    private function getCacheKey(CarSearchFilter $filter): string
-    {
-        return 'car-search:' . md5(json_encode([
-                'search' => $filter->search,
-                'brands' => $filter->brandIds ? implode(',', $filter->brandIds) : null,
-                'categories' => $filter->categoryIds ? implode(',', $filter->categoryIds) : null,
-                'page' => request('page', 1),
-            ]));
+        return Cache::remember($key, now()->addMinutes(10), function () use ($filter) {
+            return $this->repository->search($filter);
+        });
     }
 }

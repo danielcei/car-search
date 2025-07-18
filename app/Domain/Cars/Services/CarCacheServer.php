@@ -11,6 +11,6 @@ class CarCacheServer
      */
     public static function clearCarSearchCache(): void
     {
-        Redis::connection()->client()->flushdb();
+        Redis::connection()->client()->flushAll();
     }
 }

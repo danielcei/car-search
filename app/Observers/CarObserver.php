@@ -39,6 +39,15 @@ class CarObserver
      * @param Car $car
      * @return void
      */
+    public function deleting(Car $car): void
+    {
+        $this->clearCarSearchCache();
+    }
+
+    /**
+     * @param Car $car
+     * @return void
+     */
     public function restored(Car $car): void
     {
         $this->clearCarSearchCache();

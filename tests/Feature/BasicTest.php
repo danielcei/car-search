@@ -16,9 +16,11 @@ test('componente Livewire carrega corretamente', function () {
 });
 
 test('mostra mensagem quando não há carros cadastrados', function () {
-    Car::query()->delete();
+    Car::all()->each->delete();
+
     Livewire::test(CarSearch::class)
-        ->assertSeeHtml('<h3 class="mt-2 text-lg font-medium text-gray-900">Nenhum carro encontrado</h3>');
+        ->assertSeeHtml('Nenhum carro encontrado');
+
 });
 
 test('lista carros corretamente', function () {

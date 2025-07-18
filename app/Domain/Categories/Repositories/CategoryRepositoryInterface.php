@@ -1,9 +1,9 @@
 <?php
-namespace App\Domain\Cars\Repositories;
+namespace App\Domain\Categories\Repositories;
 
 use Illuminate\Support\Collection;
 
-interface BrandRepositoryInterface
+interface CategoryRepositoryInterface
 {
     public function getAllCached(): Collection;
 }

@@ -106,37 +106,38 @@
                 </div>
             </div>
         @else
-            <div class="text-center py-12">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                     aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <h3 class="mt-2 text-lg font-medium text-gray-900">Nenhum carro encontrado</h3>
-                <p class="mt-1 text-sm text-gray-500">
-                    @if($search || $selectedBrands || $selectedCategories)
-                        Tente ajustar seus critérios de busca.
-                    @else
-                        Não encontramos nenhum carro disponível no momento.
-                    @endif
-                </p>
-                <p>
-                    @if ($errors->has('selectedBrands'))
-                        <div class="alert alert-danger error-brands">{{ $errors->first('selectedBrands') }}</div>
-                    @endif
+            <div class="w-full">
+                <div class="flex items-center justify-center min-h-screen bg-gray-100">
+                    <div class="text-center py-12">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3 class="mt-2 text-lg font-medium text-gray-900">Nenhum carro encontrado</h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                            @if($search || $selectedBrands || $selectedCategories)
+                                Tente ajustar seus critérios de busca.
+                            @else
+                                Não encontramos nenhum carro disponível no momento.
+                            @endif
+                        </p>
 
-                    @if ($errors->has('selectedCategories'))
-                        <div class="alert alert-danger error-categories"> {{ $errors->first('selectedCategories') }} </div>
-                    @endif
-                    </p>
-                @if($search || $selectedBrands || $selectedCategories)
-                    <div class="mt-6">
-                        <button wire:click="resetFilters" type="button"
-                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Limpar filtros
-                        </button>
+                        @if ($errors->has('filters-erros'))
+                            <div class="mt-2 text-red-600 text-sm">{{ $errors->first('filters-erros') }}</div>
+                        @endif
+
+                        @if($search || $selectedBrands || $selectedCategories)
+                            <div class="mt-6">
+                                <button wire:click="resetFilters" type="button"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Limpar filtros
+                                </button>
+                            </div>
+                        @endif
                     </div>
-                @endif
+                </div>
             </div>
         @endif
     </div>

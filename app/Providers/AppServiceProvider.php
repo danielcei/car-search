@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Domain\Cars\Repositories\BrandRepositoryInterface;
+use App\Domain\Brands\Repositories\BrandRepositoryInterface;
 use App\Domain\Cars\Repositories\CarRepositoryInterface;
-use App\Domain\Cars\Repositories\CategoryRepositoryInterface;
+use App\Domain\Categories\Repositories\CategoryRepositoryInterface;
 use App\Infrastructure\Eloquent\Repositories\BrandRepository;
 use App\Infrastructure\Eloquent\Repositories\CarRepository;
 use App\Infrastructure\Eloquent\Repositories\CategoryRepository;

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Observers\CarObserver;
 use Database\Factories\CarFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+#[ObservedBy([CarObserver::class])]
 class Car extends Model
 {
     /** @use HasFactory<CarFactory> */
@@ -21,8 +22,6 @@ class Car extends Model
         'description',
         'price'
     ];
-
-    #[ObservedBy([CarObserver::class])]
 
     /**
      * @return BelongsTo

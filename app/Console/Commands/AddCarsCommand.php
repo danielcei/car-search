@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Brand;
 use App\Models\Car;
-use App\Models\Category;
 use Illuminate\Console\Command;
 
 class AddCarsCommand extends Command
