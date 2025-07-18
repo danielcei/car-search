@@ -58,9 +58,6 @@ Sistema de busca de carros com filtros combinados desenvolvido em Laravel Livewi
    php artisan optimize
    ./vendor/bin/pest
 
-
-
-
 ## Adicione produtos - carro
 
 1. Digite o comando a baixo para adicionar novos produtos (faker)
